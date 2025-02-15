@@ -2,7 +2,7 @@
   "name": "chat-app-server",
   "version": "1.0.0",
   "description": "Chat App (MERN)",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js"
   },

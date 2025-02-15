@@ -1,10 +1,20 @@
 const express = require('express');
 const dotenv = require('dotenv')
 const chats = require('./data/data');
-const cors = require('cors')
+const cors = require('cors');
+const mongoose = require('mongoose')
 
 dotenv.config();
 const app = express()
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("DB connection established");
+    } catch (error) {
+        console.log("DB connection error ", error);
+    }
+}
 
 const coreOptions = {
     origin: true,
