@@ -1,0 +1,4 @@
+.App{
+    min-height: 100vh;
+    background: linear-gradient(var(--bg-color2),var(--text-color2));
+}
