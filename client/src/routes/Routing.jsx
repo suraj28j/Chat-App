@@ -1,13 +1,14 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import HomePage from '../pages/HomePage'
-import ChatPage from '../pages/ChatPage'
-import SignUp from '../pages/SignUp'
+
+import Login from '../HomePage/Login'
+import SignUp from '../HomePage/SignUp'
+import ChatPage from '../HomePage/ChatPage'
 
 const Routing = () => {
     return (
         <Routes>
-            <Route path='/' element={<HomePage />} />
+            <Route path='/' element={<Login />} />
             <Route path='/chats' element={<ChatPage />} />
             <Route path='/signup' element={<SignUp/>} />
         </Routes>

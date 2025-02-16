@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import './HomePageStyle.css'
+import './Style.css'
 import { Link } from 'react-router-dom'
+import { BASE_URL } from '../utilits/config'
 
 const SignUp = () => {
     const [credential, setCredential] = useState({
@@ -15,8 +16,20 @@ const SignUp = () => {
         console.log(credential);
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault()
+
+        try {
+            const res = await fetch(`${BASE_URL}/user/register`, {
+                method: "POST",
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(credential)
+            })
+            const result = await res.json();
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <div className='container'>
@@ -31,16 +44,16 @@ const SignUp = () => {
                         </div>
                         <form className='p-3' onSubmit={handleClick}>
                             <label htmlFor="name" className="form-label">Name :</label>
-                            <input type="text" className="form-control" id="name" required placeholder="Enter Your Name" onChange={handleChange}/>
+                            <input type="text" className="form-control" id="name" required placeholder="Enter Your Name" onChange={handleChange} />
 
                             <label htmlFor="email" className="form-label mt-2">Email Address :</label>
-                            <input type="email" className="form-control" id="email" required placeholder="Enter Your Email Address" onChange={handleChange}/>
+                            <input type="email" className="form-control" id="email" required placeholder="Enter Your Email Address" onChange={handleChange} />
 
                             <label htmlFor="password" className="form-label mt-2">Password :</label>
-                            <input type="password" className="form-control" id="password" required placeholder="Enter Password" onChange={handleChange}/>
+                            <input type="password" className="form-control" id="password" required placeholder="Enter Password" onChange={handleChange} />
 
                             <label htmlFor="confirmPassword" className="form-label mt-2">Confirm Password :</label>
-                            <input type="password" className="form-control" id="confirmPassword" required placeholder="Confirm Password" onChange={handleChange}/>
+                            <input type="password" className="form-control" id="confirmPassword" required placeholder="Confirm Password" onChange={handleChange} />
 
                             <label htmlFor="profile" className="form-label mt-2">Upload Profile :</label>
                             <input type="file" className="form-control" id="profile" placeholder="" />

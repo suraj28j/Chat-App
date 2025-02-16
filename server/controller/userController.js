@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-    
+
     const { email } = req.body
 
     try {
@@ -46,7 +46,7 @@ const loginUser = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
 
         const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
-    
+
         if (!isPasswordMatch)
             return res.status(404).json({ success: false, messsage: "Failed to login" })
 
@@ -60,6 +60,25 @@ const loginUser = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser };
+const searchUser = async (req, res) => {
+    let keywords = req.query.search ? {
+        $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } }
+        ]
+    } : {}
+
+    // const user = await User.find(keywords).find({ _id: { $ne: req.user._id } })
+    const user = await User.find(keywords)
+
+    // console.log("user ",user);
+
+    const { password, ...rest } = user[0]._doc
+    
+
+    res.status(200).json({ success: true, data: { ...rest } });
+}
+
+module.exports = { registerUser, loginUser, searchUser };
 
 

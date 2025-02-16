@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const UserRoute = require('./routes/userRoute');
+const ChatRoute = require('./routes/chatRoute');
 
 dotenv.config();
 const app = express()
@@ -32,18 +33,17 @@ app.use(cookieParser());
 
 
 app.use("/api/user",UserRoute);
+app.use("/api/chat",ChatRoute);
 
 
 app.get("/api/chat", (req, res) => {
     res.send(chats)
 })
-
 app.get("/api/chat/:id", (req, res) => {
     // console.log(req.params.id);
     const singleChat = chats.find((val) => val._id === req.params.id)
     res.send(singleChat);
 })
-
 app.get("/", (req, res) => {
     res.send("<h2>API is running</h2>");
 })

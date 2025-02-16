@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import './HomePageStyle.css'
+import './Style.css'
 import { Link } from 'react-router-dom'
+import { BASE_URL } from '../utilits/config'
 
-const HomePage = () => {
+
+const Login = () => {
   const [credential, setCredential] = useState({
     email: undefined,
     password: undefined,
@@ -13,9 +15,24 @@ const HomePage = () => {
     console.log(credential);
   }
 
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch(`${BASE_URL}/user/login`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(credential)
+      })
+      const result = await res.json();
+      console.log(result);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   return (
     <div className='container'>
       <div className='row'>
@@ -45,4 +62,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default Login
